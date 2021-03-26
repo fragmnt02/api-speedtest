@@ -1,6 +1,7 @@
 require('dotenv').config(); 
 const Telegraf = require('telegraf'); 
 const express = require('express'); 
+const fetch = require('node-fetch');
 const expressApp = express(); 
 
 const bot = new Telegraf(process.env.BOT_TOKEN); 
@@ -21,15 +22,20 @@ bot.command('ver', async (ctx) => {
 
 
 bot.on('text', async (ctx) => {
-    if (ctx.message.text.includes('ver')) {
-        const res = await fetchVelocidades();
+    if (ctx.message.text.includes('velocidad')) {
+        const res = await fetchVelocidades(ctx.message.text.replace('velocidad ',''));
         ctx.reply(res);
     } else {
         ctx.reply('adios test');
     }
 });
 
-async function fetchVelocidades() {
+async function fetchVelocidades(url) {
+    const res = await fetch(url);
+    if (res.ok) {
+        const data = await res.json();
+        return data.response;
+    }
     return 'Hola test';
 }
 
