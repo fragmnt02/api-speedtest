@@ -1,6 +1,7 @@
 require('dotenv').config();
 const fetch = require('node-fetch');
 const { exec } = require('child_process');
+const MINUTOS = 2;
 function callback() {
     console.log('calculando velocidad');
     exec('speedtest', async (err, stdout, stderr) => {
@@ -32,7 +33,7 @@ function callback() {
 
 enviarMsg('agente conectado');
 console.log(`Agente conectado para chat ${process.env.CHAT_ID}`)
-const intervalId = setInterval(callback, 120000);
+const intervalId = setInterval(callback, MINUTOS * 60000);
 
 async function enviarMsg(msg) {
     await fetch(`https://bot-speedtest.vercel.app/webhook?chatId=${process.env.CHAT_ID}`, {
