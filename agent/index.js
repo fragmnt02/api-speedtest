@@ -2,27 +2,35 @@ require('dotenv').config();
 const fetch = require('node-fetch');
 const { exec } = require('child_process');
 function callback() {
+    console.log('calculando velocidad');
     exec('speedteest', async (err, stdout, stderr) => {
         if (err) {
             return
         }
+        if (stderr) {
+            console.log(stderr);
+        }
         const body = JSON.stringify({
             response: stdout
         });
+        console.log(stdout);
         console.log(`Envidando a https://bot-speedtest.vercel.app/webhook?chatId=${process.env.CHAT_ID}`);
-        await fetch(`https://bot-speedtest.vercel.app/webhook?chatId=${process.env.CHAT_ID}`, {
+        const res = await fetch(`https://bot-speedtest.vercel.app/webhook?chatId=${process.env.CHAT_ID}`, {
             method: 'POST',
             body,
             headers: {
                 'Content-Type': 'application/json'
             }
         });
+        if (res.ok) {
+            console.log('Mensaje enviado con extito');
+        }
     });
 }
 
 enviarMsg('agente conectado');
 console.log(`Agente conectado para chat ${process.env.CHAT_ID}`)
-const intervalId = setInterval(callback, 600000);
+const intervalId = setInterval(callback, 120000);
 
 async function enviarMsg(msg) {
     await fetch(`https://bot-speedtest.vercel.app/webhook?chatId=${process.env.CHAT_ID}`, {
