@@ -3,12 +3,14 @@ const fetch = require('node-fetch');
 const { exec } = require('child_process');
 function callback() {
     console.log('calculando velocidad');
-    exec('speedteest', async (err, stdout, stderr) => {
+    exec('speedtest', async (err, stdout, stderr) => {
         if (err) {
-            return
+            console.log(err)
+            return;
         }
         if (stderr) {
             console.log(stderr);
+            return;
         }
         const body = JSON.stringify({
             response: stdout
