@@ -1,7 +1,6 @@
 require('dotenv').config(); 
 const {Telegraf} = require('telegraf'); 
 const express = require('express');
-const fetch = require('node-fetch');
 const expressApp = express(); 
 
 const bot = new Telegraf(process.env.BOT_TOKEN); 
@@ -31,15 +30,6 @@ bot.on('text', async (ctx) => {
         ctx.reply(ctx.message.chat.id);
     }
 });
-
-async function fetchVelocidades(url) {
-    const res = await fetch(url);
-    if (res.ok) {
-        const data = await res.json();
-        return data.response;
-    }
-    return 'Hola test';
-}
 
 expressApp.listen(3000, () => {
     console.log('Example app listening on port ' + PORT);
