@@ -7,7 +7,7 @@ const bot = new Telegraf(process.env.BOT_TOKEN)
 console.log(process.env.BOT_TOKEN)
 
 expressApp.use(bot.webhookCallback('/bot'))
-bot.telegram.setWebhook('https://chaupakobot.now.sh/bot')
+bot.telegram.setWebhook('https://bot-speedtest.vercel.app/bot')
 
 expressApp.get('/', (req, res) => {
   res.send('Bot version 1')
