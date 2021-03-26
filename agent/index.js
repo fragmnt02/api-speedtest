@@ -49,6 +49,7 @@ async function enviarMsg(msg) {
 
 function cleanup() {
     clearInterval(intervalId);
+    enviarMsg('Agente desconectado');
 }
 
 //do something when app is closing

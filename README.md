@@ -18,3 +18,5 @@
 
 1. Ir a la carpeta agent
 2. Ejecutar el comando `npm start`
+
+Para detener ejecuta el comando `npm stop` igual en la carpeta agent.
