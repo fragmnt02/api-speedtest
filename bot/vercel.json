@@ -1,0 +1,17 @@
+{
+    "name": "speedtest-bot",
+    "alias": "speedtest-bot",
+    "version": 2,
+    "builds": [
+        {
+            "src": "server.js",
+            "use": "@now/node"
+        }
+    ],
+    "routes": [
+        {
+            "src": "^/(.*)",
+            "dest": "/server.js"
+        }
+    ]
+}
