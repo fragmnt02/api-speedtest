@@ -1,45 +1,39 @@
-const express = require('express');
+require('dotenv').config(); 
 const { exec } = require('child_process');
-const ngrok = require('ngrok');
-const app = express();
 
-const PORT = process.env.PORT || 3000;
-
-async function main () {
-    try {
-        const url = await ngrok.connect({
-            proto: 'http',
-            addr: PORT
+async function callback() {
+    exec('speedteest', (err, stdout, stderr) => {
+        if (err) {
+            return
+        }
+        const body = JSON.stringify({
+            response: stdout
         });
-        console.log(url);
-        await saveFirebaseURL(url);
-        app.get('/', function (req, res) {
-            exec('speedtest', (err, stdout, stderr) => {
-                if (err) {
-                    res.status(500).send();
-                    return;
-                }
-                res.status(200).send({
-                    response: stdout
-                });
-            });
+        await fetch(`https://bot-speedtest.vercel.app/webhook?chatId=${process.env.CHAT_ID}`,{
+            method:'POST',
+            body,
+            headers:{
+                'Content-Type':'application/json'
+            }
         });
-
-        app.listen(PORT, () => {
-            console.log('Agente escuchando en el puerto ' + PORT);
-        });
-    } catch (error) {
-
-    }
-
+    });
 }
 
-async function saveFirebaseURL(url) {
-    
+const intervalId = setInterval(callback,600000);
+
+function cleanup() {
+    clearInterval(intervalId);
 }
 
-main();
+//do something when app is closing
+process.on('exit', cleanup);
 
+//catches ctrl+c event
+process.on('SIGINT', cleanup);
 
+// catches "kill pid" (for example: nodemon restart)
+process.on('SIGUSR1', cleanup);
+process.on('SIGUSR2',cleanup);
 
-
+//catches uncaught exceptions
+process.on('uncaughtException', cleanup);
