@@ -1,12 +1,13 @@
 require('dotenv').config(); 
 const {Telegraf} = require('telegraf'); 
-const express = require('express'); 
+const express = require('express');
 const fetch = require('node-fetch');
 const expressApp = express(); 
 
 const bot = new Telegraf(process.env.BOT_TOKEN); 
 console.log(process.env.BOT_TOKEN); 
 
+expressApp.use(express.bodyParser.json());
 expressApp.post('/webhook',(req,res)=>{
     const {chatId} = req.query;
     const {response} = req.body;
