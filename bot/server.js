@@ -26,6 +26,7 @@ expressApp.get('/', (req, res) => {
 });
 
 bot.on('text', async (ctx) => {
+    console.log(ctx.message.text)
     if (ctx.message.text.includes('chatId')) {
         ctx.reply(ctx.message.chat.id);
     }
