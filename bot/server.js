@@ -25,7 +25,7 @@ expressApp.get('/', (req, res) => {
     res.send('Bot version 1');
 });
 
-bot.command('chatId',(ctx)=>{
+bot.command('chat',(ctx)=>{
     ctx.reply(ctx.message.chat.id);
 })
 
