@@ -22,7 +22,7 @@ expressApp.use(bot.webhookCallback('/bot'));
 bot.telegram.setWebhook('https://bot-speedtest.vercel.app/bot');
 
 bot.telegram.getMe().then((botInfo) => {
-    app.options.username = botInfo.username
+    bot.options.username = botInfo.username
 });
 
 expressApp.get('/', (req, res) => {
