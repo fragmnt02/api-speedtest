@@ -25,13 +25,18 @@ expressApp.get('/', (req, res) => {
     res.send('Bot version 1');
 });
 
+bot.command('chatId',(ctx)=>{
+    ctx.reply(ctx.message.chat.id);
+})
+
+/*
 bot.on('text', (ctx) => {
     console.log(ctx.message.text)
     if (ctx.message.text.includes('chatId')) {
         ctx.reply(ctx.message.chat.id);
     }
 });
-
+*/
 expressApp.listen(3000, () => {
     console.log('Example app listening on port ' + PORT);
 });
