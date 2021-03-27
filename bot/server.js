@@ -4,7 +4,7 @@ const express = require('express');
 const expressApp = express();
 const PORT = process.env.PORT || 3000;
 const bot = new Telegraf(process.env.BOT_TOKEN);
-console.log(BOT_TOKEN);
+console.log(process.env.BOT_TOKEN);
 
 expressApp.use(express.json());
 expressApp.post('/webhook', (req, res) => {
